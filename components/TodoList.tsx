@@ -127,51 +127,11 @@ const Container = styled.div`
   }
 `;
 
-const TodoList: React.FC = () => {
-  const todos = useSelector((state) => state.todo.todos);
-  const dispatch = useDispatch();
-  //* 색깔 객체 구하기 1
-  const getTodoColorNums = useCallback(() => {
-    let red = 0;
-    let orange = 0;
-    let yellow = 0;
-    let green = 0;
-    let blue = 0;
-    let navy = 0;
-    todos.forEach((todo) => {
-      switch (todo.color) {
-        case "red":
-          red += 1;
-          break;
-        case "orange":
-          orange += 1;
-          break;
-        case "yellow":
-          yellow += 1;
-          break;
-        case "green":
-          green += 1;
-          break;
-        case "blue":
-          blue += 1;
-          break;
-        case "navy":
-          navy += 1;
-          break;
-        default:
-          break;
-      }
-    });
+interface IProps{
+  todos: TodoType[];
+}
+const TodoList: React.FC<IProps> = ({todos}) => {
 
-    return {
-      red,
-      orange,
-      yellow,
-      green,
-      blue,
-      navy,
-    };
-  }, [todos]);
 
   //* 객체의 문자열 인덱스 사용을 위한 타입
   type ObjectIndexType = {
@@ -194,35 +154,6 @@ const TodoList: React.FC = () => {
     return colors;
   }, [todos]);
 
-  //* 투두 체크하기
-  const checkTodo = async (id: number) => {
-    try {
-      await checkTodoAPI(id);
-      //* 체크를 적용하는 방법 3(data를 local로 저장하여 사용하기)
-      const newTodos = todos.map((todo) => {
-        if (todo.id === id) {
-          return { ...todo, checked: !todo.checked };
-        }
-        return todo;
-      });
-      dispatch(todoActions.setTodo(newTodos));
-      console.log("체크하였습니다.");
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  //*투두 삭제하기
-  const deleteTodo = async (id: number) => {
-    try {
-      await deleteTodoAPI(id);
-      const newTodos = todos.filter((todo) => todo.id !== id);
-      dispatch(todoActions.setTodo(newTodos));
-      console.log("삭제했습니다.");
-    } catch (e) {
-      console.log(e);
-    }
-  };
 
   return (
     <Container>
@@ -253,29 +184,12 @@ const TodoList: React.FC = () => {
               </p>
             </div>
             <div className="todo-right-side">
-              {todo.checked && (
-                <>
-                  <TrashCanIcon
-                    className="todo-trash-can"
-                    onClick={() => {
-                      deleteTodo(todo.id);
-                    }}
-                  />
-                  <CheckMarkIcon
-                    className="todo-check-mark"
-                    onClick={() => {
-                      checkTodo(todo.id);
-                    }}
-                  />
-                </>
-              )}
+       
               {!todo.checked && (
                 <button
                   type="button"
                   className="todo-button"
-                  onClick={() => {
-                    checkTodo(todo.id);
-                  }}
+               
                 />
               )}
             </div>
