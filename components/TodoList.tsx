@@ -1,14 +1,10 @@
-import React, { useMemo, useCallback } from "react";
-import { useDispatch } from "react-redux";
+import React, { useMemo } from "react";
 import styled from "styled-components";
 import pallete from "../styles/pallete";
 
 import TrashCanIcon from "../public/static/svg/trash_can.svg";
 import CheckMarkIcon from "../public/static/svg/check_mark.svg";
 
-import { checkTodoAPI, deleteTodoAPI } from "../lib/api/todo";
-import { useSelector } from "../store";
-import { todoActions } from "../store/todo";
 import { TodoType } from "../types/todo";
 
 const Container = styled.div`
@@ -106,7 +102,7 @@ const Container = styled.div`
           }
         }
         .todo-trash-can {
-          width: 16px;
+          width: 21px;
           path {
             fill: ${pallete.deep_red};
           }
@@ -126,13 +122,10 @@ const Container = styled.div`
     }
   }
 `;
-
 interface IProps{
   todos: TodoType[];
 }
-const TodoList: React.FC<IProps> = ({todos}) => {
-
-
+const TodoList: React.FC<IProps> = ({ todos }) => {
   //* 객체의 문자열 인덱스 사용을 위한 타입
   type ObjectIndexType = {
     [key: string]: number | undefined;
@@ -153,7 +146,6 @@ const TodoList: React.FC<IProps> = ({todos}) => {
     });
     return colors;
   }, [todos]);
-
 
   return (
     <Container>
@@ -184,12 +176,20 @@ const TodoList: React.FC<IProps> = ({todos}) => {
               </p>
             </div>
             <div className="todo-right-side">
-       
+
+              {todo.checked && (
+                <>
+                  <TrashCanIcon className="todo-trash-can" onclick={() => { }} />
+                  <CheckMarkIcon className="todo-check-mark" onClick={() => { }} />
+                </>
+
+              )}
+
               {!todo.checked && (
                 <button
                   type="button"
                   className="todo-button"
-               
+
                 />
               )}
             </div>
