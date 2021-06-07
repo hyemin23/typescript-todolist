@@ -179,7 +179,7 @@ const TodoList: React.FC<IProps> = ({ todos }) => {
 
               {todo.checked && (
                 <>
-                  <TrashCanIcon className="todo-trash-can" onclick={() => { }} />
+                  <TrashCanIcon className="todo-trash-can" onClick={() => { }} />
                   <CheckMarkIcon className="todo-check-mark" onClick={() => { }} />
                 </>
 

@@ -1,5 +1,5 @@
 import { readFileSync, writeFileSync } from "fs";
-import { TodoType } from "../../types/todo";
+import { TodoType } from "../../../../html이미지파일/code 2/next-todo/types/todo";
 
 //* 투두 리스트 데이터 불러오기
 const getList = () => {
@@ -13,15 +13,9 @@ const getList = () => {
 };
 
 //* id의 투두가 있는지 확인하기
-const exist = ({ id }: { id: number }) => {
+const exist = ({ id }:{id:number}) => {
   const todos = getList();
   const todo = todos.some((todo) => todo.id === id);
   return todo;
 };
-
-//* 투두 리스트 저장하기
-const write = async (todos: TodoType[]) => {
-  writeFileSync("data/todos.json", JSON.stringify(todos));
-};
-
-export default { getList, exist, write };
+export default { getList };
